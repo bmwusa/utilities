@@ -5,6 +5,7 @@ typedef unsigned __int64 uint64_t;
 #include <Windows.h>
 #else
 #include <stdint.h>
+#include <sys/time.h>
 #endif
 
 #include <stdlib.h>
@@ -77,9 +78,9 @@ int main(int argc, const char* argv[])
     initwritebuff(writezero);
 
     printf("Writing %d GBytes to disk...\n", gb);
-#if _WIN32
+
     gettimeofday(&starttime, 0);
-#endif
+
     while (byteswritten < totalbytes) {
         int per;
         uint64_t rc;
@@ -100,11 +101,10 @@ int main(int argc, const char* argv[])
 	fflush(f);
     fclose(f);
 
-#if _WIN32
     gettimeofday(&endtime, 0);
-#endif
 	usecdelta = (uint64_t) endtime.tv_sec * 1000000 + endtime.tv_usec - (uint64_t) starttime.tv_sec * 1000000 - starttime.tv_usec;
-    printf("All done! %d GBytes are written to disk.\n", gb);
+
+    printf("All done! %d G bytes are written to disk.\n", gb);
     printf("%f seconds are used. Average speed: %f MB/s\n", (double) usecdelta / 1000000, \
 		((double) byteswritten * 1000000 / WRITE_MB) / usecdelta);
 
