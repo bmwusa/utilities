@@ -85,7 +85,7 @@ int main(int argc, const char* argv[])
         uint64_t rc;
         rc = fwrite(writebuff, 1, WRITE_BUFF_SIZE, f);
         if (rc != WRITE_BUFF_SIZE) {
-            printf("fwrite error. bytes written = %lld\n", byteswritten);
+            printf("fwrite error. bytes written = %lu\n", byteswritten);
             fclose(f);
             return -2;
         }
